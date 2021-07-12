@@ -1,0 +1,38 @@
+package com.demo.wallet;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import springfox.documentation.builders.ApiInfoBuilder;
+import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.Contact;
+import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
+@Configuration
+@EnableSwagger2
+public class RestClientConfiguration {
+
+    @Bean
+    public Docket docket() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .select()
+                .apis(RequestHandlerSelectors.basePackage(getClass().getPackage().getName()))
+                .paths(PathSelectors.any())
+                .build()
+                .apiInfo(generateApiInfo());
+    }
+
+    private ApiInfo generateApiInfo() {
+        return new ApiInfoBuilder().title("Swagger Wallet")
+                .description("This is a sample server Wallet server.  You can find out more about     Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).      ")
+                .license("Apache 2.0")
+                .licenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html")
+                .termsOfServiceUrl("")
+                .version("1.0.0")
+                .contact(new Contact("","", "nikola.stevkovic@outlook.com"))
+                .build();
+    }
+}
